@@ -1,0 +1,72 @@
+{
+  "id": "hunyuan3d-mini-fast",
+  "name": "Hunyuan3D 2 Mini Fast",
+  "type": "model",
+  "source": "https://github.com/lightningpixel/modly-hunyuan3d-mini-fast-extension",
+  "description": "Distilled fast variant of Hunyuan3D 2 Mini. Same quality at 5–10 steps instead of 30.",
+  "version": "1.0.0",
+  "author": "Lightning Pixel",
+  "generator_class": "Hunyuan3DMiniFastGenerator",
+  "tags": ["image-to-3d", "fast", "low-vram"],
+  "nodes": [
+    {
+      "id": "generate",
+      "name": "Generate Mesh",
+      "input": "image",
+      "output": "mesh",
+      "hf_repo": "tencent/Hunyuan3D-2mini",
+      "download_check": "hunyuan3d-dit-v2-mini-fast",
+      "hf_skip_prefixes": [
+        "hunyuan3d-dit-v2-mini/",
+        "hunyuan3d-dit-v2-mini-turbo/",
+        "hunyuan3d-vae-v2-mini-turbo/",
+        "hunyuan3d-vae-v2-mini-withencoder/"
+      ],
+      "params_schema": [
+        {
+          "id": "num_inference_steps",
+          "label": "Quality",
+          "type": "select",
+          "default": 10,
+          "options": [
+            { "value": 5,  "label": "Fast" },
+            { "value": 10, "label": "Balanced" },
+            { "value": 20, "label": "High" }
+          ],
+          "tooltip": "Number of diffusion steps. More steps = better quality but slower."
+        },
+        {
+          "id": "octree_resolution",
+          "label": "Mesh Resolution",
+          "type": "select",
+          "default": 380,
+          "options": [
+            { "value": 256, "label": "Low" },
+            { "value": 380, "label": "Medium" },
+            { "value": 512, "label": "High" }
+          ],
+          "tooltip": "Octree resolution for mesh reconstruction. Higher = more detail but slower and more VRAM."
+        },
+        {
+          "id": "guidance_scale",
+          "label": "Guidance Scale",
+          "type": "float",
+          "default": 5.5,
+          "min": 1.0,
+          "max": 10.0,
+          "step": 0.5,
+          "tooltip": "Classifier-free guidance strength. Higher = closer to the input image."
+        },
+        {
+          "id": "seed",
+          "label": "Seed",
+          "type": "int",
+          "default": -1,
+          "min": -1,
+          "max": 4294967295,
+          "tooltip": "Seed for reproducibility. Set to -1 for a random seed."
+        }
+      ]
+    }
+  ]
+}
